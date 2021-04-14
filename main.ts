@@ -1,3 +1,8 @@
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+    otherSprite.vx = -1.1 * otherSprite.vx
+    otherSprite.vy = 1.1 * otherSprite.vy
+    music.playTone(494, music.beat(BeatFraction.Half))
+})
 let picture = image.create(scene.screenWidth(), scene.screenHeight())
 for (let index = 0; index <= scene.screenHeight(); index++) {
     if (index % 6 < 4) {
@@ -73,8 +78,21 @@ game.onUpdate(function () {
     if (grillai.x > bellato.right) {
         info.changeScoreBy(1)
         music.jumpUp.play()
-        grillai.setVelocity(50, 50)
-    } else {
-    	
+        grillai.setPosition(rossini.x + 3, rossini.y)
+        grillai.setVelocity(randint(50, 75), randint(25, 50))
+    } else if (grillai.x < rossini.left) {
+        info.changeLifeBy(-1)
+        music.jumpDown.play()
+        grillai.setPosition(bellato.x - 3, bellato.y)
+        grillai.setVelocity(randint(-75, -50), randint(25, 50))
+    }
+})
+game.onUpdate(function () {
+    if (grillai.x > scene.screenWidth() / 2) {
+        if (grillai.y > bellato.y) {
+            bellato.y += 2
+        } else {
+            bellato.y += -2
+        }
     }
 })
